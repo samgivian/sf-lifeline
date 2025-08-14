@@ -16,6 +16,7 @@ import { TbSearch as IconSearch } from 'react-icons/tb';
 import HospitalsTable from './HospitalsTable';
 import { useHospitals } from './useHospitals';
 import HospitalModal from './HospitalModal';
+import HospitalsMap from './HospitalsMap';
 
 /**
  *  Hosptials page component
@@ -23,7 +24,9 @@ import HospitalModal from './HospitalModal';
  */
 export default function Hospitals () {
   const [inputValue, setInputValue] = useState('');
+  const [region, setRegion] = useState('');
   const [opened, { open, close }] = useDisclosure(false);
+  const [mapOpened, { open: openMap, close: closeMap }] = useDisclosure(false);
   const { hospitals, headers, isFetching, page, pages, setPage, setSearch } = useHospitals();
 
   const handleSearch = useDebouncedCallback((query) => {
@@ -33,6 +36,7 @@ export default function Hospitals () {
   return (
     <Container>
       <HospitalModal opened={opened} close={close} />
+      <HospitalsMap opened={mapOpened} close={closeMap} region={region} />
       <Group justify='space-between' wrap='nowrap' my='sm'>
         <Title order={3} mr='md'>
           Hospitals
@@ -48,6 +52,14 @@ export default function Hospitals () {
             }}
             value={inputValue}
           />
+          <TextInput
+            placeholder='Region'
+            onChange={(event) => setRegion(event.currentTarget.value)}
+            value={region}
+          />
+          <Button variant='light' onClick={openMap}>
+            View Map
+          </Button>
           <Button variant='filled' onClick={open}>
             Create Hospital
           </Button>

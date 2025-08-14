@@ -57,7 +57,7 @@ export default function Hospitals () {
             onChange={(event) => setRegion(event.currentTarget.value)}
             value={region}
           />
-          <Button variant='light' onClick={openMap}>
+          <Button variant='light' onClick={openMap} disabled={!region.trim()}>
             View Map
           </Button>
           <Button variant='filled' onClick={open}>
